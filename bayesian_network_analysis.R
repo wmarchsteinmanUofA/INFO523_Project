@@ -1,23 +1,19 @@
 #Imports
-library("Rsamtools")
+library(Rsamtools)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(org.Hs.eg.db)
-library("GenomicAlignments")
-library("BiocParallel")
-library("Rsubread")
-library("pheatmap")
-library("annotate")
+library(GenomicAlignments)
+library(BiocParallel)
+library(Rsubread)
+library(annotate)
 library(dplyr) 
 library(clusterProfiler)
 library(tidyverse)
 library(DESeq2)
-library(ggrepel)
-library(apeglm)
 library(CBNplot)
 library(enrichplot)
 library(msigdbr)
-library(fgsea)
 library(GSEAplot)
 
 
@@ -65,8 +61,6 @@ J14.results <- J14.results %>% as.data.frame %>% arrange(pvalue) %>% filter(!is.
 J14.test <- J14.results %>% as.data.frame %>% filter(padj < 0.05)
 
 #enrichmentAnalysis
-KeggPathway <- clusterProfiler::enrichKEGG(rownames(J14.test))
-GoPathway <- clusterProfiler::enrichGO(rownames(J14.test), ont = "BP", OrgDb = org.Hs.eg.db)
 go_gene_sets <- msigdbr(species = "Homo sapiens", category = "C2", subcategory = "KEGG")
 go_gene_sets
 g_set <- go_gene_sets %>% dplyr::select(gs_name, entrez_gene)
@@ -77,17 +71,7 @@ names(gsea_input) <- rownames(J14.test)
 gsea_input <- gsea_input[order(gsea_input,decreasing=T)]
 gseaPathways <- clusterProfiler::GSEA(gsea_input, TERM2GENE = g_set)
 
-lfc <- J14.test[order(J14.test$log2FoldChange, decreasing = TRUE),]
-lfc
-geneList <- lfc$log2FoldChange
-names(geneList) <- rownames(lfc)
-pway <- ReactomePA::enrichPathway(gene = rownames(J14.test))
-pway <- setReadable(pway,OrgDb = org.Hs.eg.db)
-pway <- enrichplot::pairwise_termsim(pway)
-pwayGSE <- ReactomePA::gsePathway(geneList)
-
-sigPathway <- subset(pway@result, p.adjust<0.05)
-enrichplot::gseaplot2(gseaPathways, geneSetID = 1, title = gseaPathways@result$ID[1], pvalue_table = T)
+enrichplot::gseaplot2(gseaPathways, geneSetID = 7, title = gseaPathways@result$ID[1], pvalue_table = T)
 
 #Data Formatting
 gseaPathways@organism <- "human"
