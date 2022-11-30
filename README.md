@@ -11,3 +11,5 @@ DESeq2
 clusterProfiler
 
 CBNplot
+
+Data necessary for import is included in the data directory. preprocessing from raw files shown in comments at the top. Must install all packages imported to run.
