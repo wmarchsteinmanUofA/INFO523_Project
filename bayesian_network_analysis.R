@@ -39,12 +39,12 @@ library(GSEAplot)
 #
 #retain <- rowSums(fc.fifty$counts) >= 10
 #counts_filtered.fifty <- fc.fifty$counts[retain,]
-#saveRDS(counts_filtered.fifty, file = "C:/Users/wmarchsteinman/Desktop/INFO523_Project/fiftyCounts.RDS")
-#saveRDS(mam.samples_50, file = "C:/Users/wmarchsteinman/Desktop/INFO523_Project/mamsamples_50.RDS")
+#saveRDS(counts_filtered.fifty, file = "C:/Users/wmarchsteinman/Desktop/INFO523_Project/data/fiftyCounts.RDS")
+#saveRDS(mam.samples_50, file = "C:/Users/wmarchsteinman/Desktop/INFO523_Project/data/mamsamples_50.RDS")
 
 #load preprocessed data
-counts_filtered.fifty <- readRDS(file = "./fiftyCounts.RDS")
-mam.samples_50 <- readRDS(file = "./mamsamples_50.RDS")
+counts_filtered.fifty <- readRDS(file = "./data/fiftyCounts.RDS")
+mam.samples_50 <- readRDS(file = "./data/mamsamples_50.RDS")
 
 diff_fc.fifty <- DESeqDataSetFromMatrix(countData = counts_filtered.fifty, colData = DataFrame(mam.samples_50), design = ~Treatment)
 
