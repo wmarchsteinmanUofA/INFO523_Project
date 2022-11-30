@@ -95,4 +95,4 @@ gseaPathways@keytype <- "ENTREZID"
 ensm <- clusterProfiler::bitr(rownames(ap.vst_fifty), fromType="ENTREZID", toType="ENSEMBL", OrgDb=org.Hs.eg.db)
 ap.vst_fifty_ensm <- ap.vst_fifty[ensm$ENTREZID, ]
 rownames(ap.vst_fifty_ensm) <- ensm$ENSEMBL
-bngeneplot(results = gseaPathways@result, exp = ap.vst_fifty_ensm, convertSymbol = TRUE, pathNum = 5)
+bngeneplot(results = gseaPathways, exp = ap.vst_fifty_ensm, convertSymbol = TRUE, pathNum = 5)
